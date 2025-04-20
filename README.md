@@ -1,1 +1,2 @@
-# Bereshit_EX0
+# Bereshit_101 Spacecraft
+The Bereshit_101 spacecraft's mission to the Moon was designed to be Israel's first successful landing on the lunar surface. Launched on February 22, 2019, the mission aimed to perform a soft landing on the Moon, capturing high-resolution images and conducting scientific experiments. This mission faced several technical challenges, ultimately leading to the crash, which provides valuable insights into autonomous landing systems.

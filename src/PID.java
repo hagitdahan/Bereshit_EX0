@@ -2,11 +2,10 @@ public class PID {
     private double P, I, D, max_i, integral, last_error;
     private boolean first_run;
 
-    public PID(double p, double i, double d, double max_i) {
+    public PID(double p, double i, double d) {
         this.P = p;
         this.I = i;
         this.D = d;
-        this.max_i = max_i;
         this.integral = 0;
         this.first_run = true;
     }
@@ -23,4 +22,10 @@ public class PID {
         this.last_error = error;
         return control_out;
     }
+    public void setGains(double kp, double ki, double kd) {
+        this.P = kp;
+        this.I = ki;
+        this.D = kd;
+    }
+
 }
