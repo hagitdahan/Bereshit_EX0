@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
 /**
  * This class represents the basic flight controller of the Bereshit space craft.
  * @author ben-moshe
@@ -69,6 +71,15 @@ public class Bereshit_101 {
 
 
     public static void main(String[] args) {
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter("bereshit_log.csv");
+        } catch (FileNotFoundException e) {
+            System.out.println("Could not create file.");
+            return;
+        }
+        writer.println("time,vs,hs,dist,alt,ang,weight,acc,fuel,dvs,NN");
+
         System.out.println("Simulating Bereshit's Landing:");
         double vs = 24.8;
         double hs = 932;
@@ -80,7 +91,7 @@ public class Bereshit_101 {
         double acc=0; // Acceleration rate (m/s^2)
         double fuel = 121; //
         double weight = WEIGHT_EMP + fuel;
-        System.out.println("time, vs, hs, dist, alt, ang,weight,acc,fuel");
+        System.out.println("time, vs, hs, dist, alt, ang,weight,acc,fuel,dvs,NN");
         double NN = 0.7; // rate[0,1]
 
         // Setup PID controllers
@@ -99,12 +110,16 @@ public class Bereshit_101 {
         setupTrajectories(angleTrajectory, vsTrajectory, hsTrajectory);
         double hsWeight = 0.0;
         while(alt>0) {
+            double desiredVs = vsTrajectory.interpolate(alt);
+
             if(time%10==0 || alt<100) {
-                System.out.println(time+","+vs+","+hs+","+dist+","+alt+","+ang+","+weight+","+acc+","+fuel);
+                //System.out.println(time+","+vs+","+hs+","+dist+","+alt+","+ang+","+weight+","+acc+","+fuel);
+                String logLine = time + "," + vs + "," + hs + "," + dist + "," + alt + "," + ang + "," + weight + "," + acc + "," + fuel + "," + desiredVs + "," + NN;
+                System.out.println(logLine);
+                writer.println(logLine);
             }
 
             currstate.update(alt);
-            double desiredVs = vsTrajectory.interpolate(alt);
             double nnOutput = vsPID.update(vs-desiredVs, dt);
 
             double desiredHs = hsTrajectory.interpolate(alt);
@@ -142,5 +157,6 @@ public class Bereshit_101 {
             vs -= v_acc*dt;
             alt -= dt*vs;
         }
+        writer.close();
     }
 }

@@ -1,0 +1,54 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load the CSV (change filename if needed)
+df = pd.read_csv("bereshit_log.csv")
+
+# Clean column names
+df.columns = df.columns.str.strip()
+
+# Plot VS and DVS
+plt.figure(figsize=(10, 4))
+plt.plot(df['time'], df['vs'], label='VS')
+plt.plot(df['time'], df['dvs'], label='DVS')
+plt.title("Vertical Speed vs Desired Vertical Speed")
+plt.xlabel("Time (s)")
+plt.ylabel("Speed (m/s)")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("vs_dvs.png")
+plt.show()
+
+# Plot Normalized Thrust (NN)
+plt.figure(figsize=(10, 4))
+plt.plot(df['time'], df['NN'], label='NN', color='orange')
+plt.title("Normalized Thrust (NN) Over Time")
+plt.xlabel("Time (s)")
+plt.ylabel("NN (0-1)")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("nn.png")
+plt.show()
+
+# Plot Altitude
+plt.figure(figsize=(10, 4))
+plt.plot(df['time'], df['alt'], label='Altitude', color='green')
+plt.title("Altitude Over Time")
+plt.xlabel("Time (s)")
+plt.ylabel("Altitude (m)")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("altitude.png")
+plt.show()
+
+# Plot Horizontal Speed
+plt.figure(figsize=(10, 4))
+plt.plot(df['time'], df['hs'], label='Horizontal Speed', color='purple')
+plt.title("Horizontal Speed Over Time")
+plt.xlabel("Time (s)")
+plt.ylabel("HS (m/s)")
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("hs.png")
+plt.show()
